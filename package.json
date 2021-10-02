@@ -1,0 +1,33 @@
+{
+  "name": "docker-control",
+  "version": "0.0.4",
+  "description": "NPM tool to monitor and control docker containers",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "run-in-all -y install client server",
+    "prettier": "run-in-all -y prettier client server",
+    "build": "run-in-all -y build client server",
+    "release": "standard-version -a ",
+    "version:current": "node scripts/current-version.js",
+    "version:new": "yarn version --no-git-tag-version --new-version",
+    "version:update": "run-in-all --yarn version:new . client server --args"
+  },
+  "author": {
+    "name": "NaN Team",
+    "email": "nan.team.s@gmail.com",
+    "url": "https://github.com/NaN-Projects"
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@commitlint/cli": "^13.2.0",
+    "@commitlint/config-conventional": "^13.2.0",
+    "husky": "^7.0.2",
+    "run-in-all": "1.2.0",
+    "standard-version": "^9.3.1"
+  },
+  "standard-version": {
+    "scripts": {
+      "postbump": "(yarn --silent version:current | xargs yarn version:update) && git add ."
+    }
+  }
+}
